@@ -1,14 +1,47 @@
-<nav class="bg-gray-900 text-white p-4 flex flex-col sm:flex-row justify-between items-center">
-  <div class="text-xl font-semibold mb-2 sm:mb-0">Campus Essentials</div>
-  <div class="space-x-4">
-    <a href="index.html" class="hover:underline">Home</a>
-    <a href="menu.html" class="hover:underline">Mess Menu</a>
-    <a href="about.html" class="hover:underline">About</a>
-    <a href="thx.html" class="hover:underline">Thank You</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white">
+  <!-- Dark Mode Toggle -->
+  <div class="flex justify-end p-4">
+    <button id="darkToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">Toggle Dark Mode</button>
   </div>
-</nav>
+  <script>
+    const toggle = document.getElementById('darkToggle');
+    toggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
 
-<section class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white p-6 rounded-xl max-w-2xl mx-auto mt-6">
-  <h2 class="text-2xl font-bold mb-4">👨‍💻 About Us</h2>
-  <p class="text-lg">This project was created by <strong>Shriniketh Deevenapalli</strong> and <strong>Kushagra Singh</strong> to make campus information more accessible and convenient for students.</p>
-</section>
+  <!-- Navigation Bar -->
+  <nav class="bg-gray-800 text-white p-4 flex justify-between flex-col sm:flex-row">
+    <div class="text-lg font-bold mb-2 sm:mb-0">Campus Essentials</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="menu.html" class="hover:underline">Mess Menu</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="thx.html" class="hover:underline">Thank You</a>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <div class="max-w-3xl mx-auto mt-10 px-4">
+    <h1 class="text-3xl font-bold mb-4">About Us</h1>
+    <p class="mb-2">This website is built by <strong>Shrinketh Deevenapalli</strong> and <strong>Kushagra Singh</strong> as a utility hub for BITS Goa students. The idea is to simplify access to campus resources, information, and services.</p>
+    <p class="mb-2">Our aim is to bring commonly used details like the mess menu, contacts, and map together in one place with a clean, responsive interface.</p>
+    <p>Feel free to reach out for suggestions or contributions!</p>
+  </div>
+</body>
+</html>
+
+
