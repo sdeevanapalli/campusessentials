@@ -1,72 +1,87 @@
-<nav class="bg-gray-900 text-white p-4 flex flex-col sm:flex-row justify-between items-center">
-  <div class="text-xl font-semibold mb-2 sm:mb-0">Campus Essentials</div>
-  <div class="space-x-4">
-    <a href="index.html" class="hover:underline">Home</a>
-    <a href="menu.html" class="hover:underline">Mess Menu</a>
-    <a href="about.html" class="hover:underline">About</a>
-    <a href="thx.html" class="hover:underline">Thank You</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mess Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white">
+  <!-- Dark Mode Toggle -->
+  <div class="flex justify-end p-4">
+    <button id="darkToggle" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">Toggle Dark Mode</button>
   </div>
-</nav>
+  <script>
+    const toggle = document.getElementById('darkToggle');
+    toggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
 
-<section class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white p-6 rounded-xl shadow-lg max-w-4xl mx-auto mt-6">
-  <h2 class="text-2xl font-bold mb-4">🍽️ Weekly Mess Menu (May 2024 Summer Vacation)</h2>
+  <!-- Navigation Bar -->
+  <nav class="bg-gray-800 text-white p-4 flex justify-between flex-col sm:flex-row">
+    <div class="text-lg font-bold mb-2 sm:mb-0">Campus Essentials</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="menu.html" class="hover:underline">Mess Menu</a>
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="thx.html" class="hover:underline">Thank You</a>
+    </div>
+  </nav>
 
-  <div class="overflow-x-auto">
-    <table class="table-auto border-collapse w-full text-sm">
-      <thead>
-        <tr class="bg-gray-200 dark:bg-gray-700">
-          <th class="border px-4 py-2">Day</th>
-          <th class="border px-4 py-2">Breakfast</th>
-          <th class="border px-4 py-2">Lunch</th>
-          <th class="border px-4 py-2">Dinner</th>
+  <!-- Mess Menu Responsive Table -->
+  <div class="overflow-x-auto mt-6 px-4">
+    <table class="table-auto w-full text-sm sm:text-base border border-gray-300 dark:border-gray-600">
+      <thead class="bg-gray-200 dark:bg-gray-800">
+        <tr>
+          <th class="p-2 border">Day</th>
+          <th class="p-2 border">Breakfast</th>
+          <th class="p-2 border">Lunch</th>
+          <th class="p-2 border">Dinner</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td class="border px-4 py-2">Monday</td>
-          <td class="border px-4 py-2">Idli, vada, chutney, sambar, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, white rice, dal, aloo methi, salad, curd, pickle, chutney</td>
-          <td class="border px-4 py-2">Veg kurma, chapati, rice, curd, chutney, pickle</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Tuesday</td>
-          <td class="border px-4 py-2">Upma, chutney, sambar, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, black channa masala, potato fry, salad, curd, pickle</td>
-          <td class="border px-4 py-2">Lauki curry, chapati, rice, curd, chutney, pickle</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Wednesday</td>
-          <td class="border px-4 py-2">Poha, chutney, tea/coffee</td>
-          <td class="border px-4 py-2">Podi dal, rice, salad, bhindi curry, curd</td>
-          <td class="border px-4 py-2">Tomato dal, roti, salad, chutney, pickle</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Thursday</td>
-          <td class="border px-4 py-2">Paratha, chutney, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, bottle gourd + soya, onion pakoda, veg pulao, curd</td>
-          <td class="border px-4 py-2">Aloo + white rice, salad, chutney, pickle</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Friday</td>
-          <td class="border px-4 py-2">Round idly, peanut chutney, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, tomato bath, rasam, aloo sabzi, curd</td>
-          <td class="border px-4 py-2">Dahi methi chaman, salad, curd, pickle</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Saturday</td>
-          <td class="border px-4 py-2">Pongal, chutney, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, veg uthappam, sambar, salad, curd</td>
-          <td class="border px-4 py-2">Soyabean masala, potato masala, chapati, curd, salad</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Sunday</td>
-          <td class="border px-4 py-2">Aloo paratha, chutney, tea/coffee</td>
-          <td class="border px-4 py-2">Rice, paneer masala, bhindi curry, curd, salad</td>
-          <td class="border px-4 py-2">Soya biryani, raita, kheer</td>
-        </tr>
+      <tbody class="bg-white dark:bg-gray-900">
+        <tr><td class="p-2 border">Mon</td><td class="p-2 border">Idli, chutney, tea</td><td class="p-2 border">Dal, roti, rice</td><td class="p-2 border">Sabzi, salad, curd</td></tr>
+        <tr><td class="p-2 border">Tue</td><td class="p-2 border">Pongal, sambhar</td><td class="p-2 border">Rajma, roti, rice</td><td class="p-2 border">Paneer, salad, rice</td></tr>
+        <tr><td class="p-2 border">Wed</td><td class="p-2 border">Dosa, chutney</td><td class="p-2 border">Chole, rice, roti</td><td class="p-2 border">Mix veg, salad</td></tr>
+        <tr><td class="p-2 border">Thu</td><td class="p-2 border">Upma, tea</td><td class="p-2 border">Sambhar, roti, rice</td><td class="p-2 border">Cabbage curry</td></tr>
+        <tr><td class="p-2 border">Fri</td><td class="p-2 border">Paratha, curd</td><td class="p-2 border">Kofta, dal, rice</td><td class="p-2 border">Kadhi, sabzi, salad</td></tr>
+        <tr><td class="p-2 border">Sat</td><td class="p-2 border">Bread, jam</td><td class="p-2 border">Aloo curry, dal, rice</td><td class="p-2 border">Bhindi, salad</td></tr>
+        <tr><td class="p-2 border">Sun</td><td class="p-2 border">Poha, tea</td><td class="p-2 border">Pulao, dal, roti</td><td class="p-2 border">Paneer, salad</td></tr>
       </tbody>
     </table>
   </div>
 
-  <p class="text-sm mt-4 italic text-gray-600 dark:text-gray-400">Breakfast: 8:00 am – 9:30 am | Lunch: 12:00 noon – 2:00 pm | Dinner: 7:30 pm – 9:00 pm</p>
-</section>
+  <!-- Responsive Grid for Campus Map and Tasks -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 px-4">
+    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl">
+      <h2 class="text-xl font-bold mb-2">Pending Works</h2>
+      <ul class="list-disc pl-6">
+        <li>Warden Phone Number List</li>
+        <li>Mess Menu Upload</li>
+        <li>Proofread Everything</li>
+        <li>Mobile Check</li>
+      </ul>
+    </div>
+    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl">
+      <h2 class="text-xl font-bold mb-2">Improvements</h2>
+      <ul class="list-disc pl-6">
+        <li>Add Dark Theme</li>
+        <li>About Page</li>
+        <li>Thank You Page</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Campus Map Embed (optional - replace with actual link later) -->
+  <div class="mt-8 px-4">
+    <h2 class="text-xl font-bold mb-2">Campus Map</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18..." width="100%" height="300" class="rounded-xl border dark:border-gray-700" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</body>
+</html>
