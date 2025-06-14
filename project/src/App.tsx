@@ -260,6 +260,22 @@ function App() {
         </CollapsibleSection>
 
 
+{/* Food Outlet Phone Numbers */}
+<CollapsibleSection 
+  title="Food Outlet Phone Numbers"
+  icon={<Car size={24} /> }
+>
+  <p className="mb-2 text-sm text-gray-700">
+    Tap on a contact to call directly.
+  </p>
+  <div className="grid grid-cols-1 gap-2 text-sm text-blue-600 underline">
+    <a href="tel:70133 34805" className="hover:text-blue-800">Hotspot – 70133 34805</a>
+    <a href="tel:93814 23625" className="hover:text-blue-800">Yummpies – 93814 23625</a>
+  </div>
+</CollapsibleSection>
+
+
+
 {/* Auto Drivers */}
 <CollapsibleSection 
   title="Campus Auto Drivers' Numbers"
