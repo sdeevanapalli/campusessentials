@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   ChevronDown,
-  ChevronUp,
   Clock,
   Store,
   User,
@@ -11,12 +10,12 @@ import {
   Utensils,
   MapPin,
   AlertTriangle,
-  Menu,
   X,
   Home,
-  BookOpen,
   Map,
-  Info
+  Info,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 // Collapsible Section with smooth animations
@@ -144,11 +143,13 @@ const RouteBadge: React.FC<{ route: string }> = ({ route }) => (
 );
 
 // Sidebar Navigation
-const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: string; onSectionChange: (section: string) => void }> = ({ 
+const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: string; onSectionChange: (section: string) => void; isDark: boolean; toggleDarkMode: () => void }> = ({ 
   isOpen, 
   onClose, 
   activeSection, 
-  onSectionChange 
+  onSectionChange,
+  isDark,
+  toggleDarkMode
 }) => {
   const menuItems = [
     { icon: <Home size={20} />, label: 'Home', id: 'home' },
@@ -176,13 +177,13 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: s
       {/* Sidebar */}
       <div className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      } lg:translate-x-0`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700">
-          {/* Close button */}
+          {/* Close button for mobile */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 lg:hidden"
           >
             <X size={24} className="text-white" />
           </button>
@@ -191,6 +192,19 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: s
             <h2 className="text-xl font-bold mb-1">Campus Essentials</h2>
             <p className="text-blue-100 dark:text-orange-100 text-sm">BITS Pilani, Hyderabad Campus</p>
           </div>
+          
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={toggleDarkMode}
+            className="mt-4 w-full bg-gray-200 dark:bg-gray-800 text-sm px-4 py-2 rounded shadow text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 active:scale-95"
+          >
+            <span className="flex items-center space-x-2 justify-center">
+              <span className={`transition-transform duration-500 ${isDark ? 'rotate-180' : 'rotate-0'}`}>
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              </span>
+              <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+            </span>
+          </button>
         </div>
 
         {/* Menu Items */}
@@ -476,54 +490,31 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-gray-900 dark:text-white transition-colors duration-300 flex">
       {/* Sidebar */}
       <Sidebar 
         isOpen={sidebarOpen} 
         onClose={() => setSidebarOpen(false)} 
         activeSection={activeSection}
         onSectionChange={setActiveSection}
+        isDark={isDark}
+        toggleDarkMode={toggleDarkMode}
       />
 
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700 text-white py-4 px-4 transition-all duration-300 sticky top-0 z-30 shadow-lg">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-lg hover:bg-white/10 transition-all duration-200 transform hover:scale-110"
-            >
-              <Menu size={24} />
-            </button>
-            <div className="transform transition-all duration-500 hover:scale-105">
-              <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-                Campus Essentials
-              </h1>
-              <p className="text-blue-100 dark:text-orange-100 text-sm md:text-base transition-colors duration-300">
-                BITS Pilani, Hyderabad Campus
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={toggleDarkMode}
-            className="bg-gray-200 dark:bg-gray-800 text-sm px-4 py-2 rounded shadow text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 active:scale-95"
-          >
-            <span className="flex items-center space-x-2">
-              <span className={`transition-transform duration-500 ${isDark ? 'rotate-180' : 'rotate-0'}`}>
-                {isDark ? '☀️' : '🌙'}
-              </span>
-              <span className="hidden sm:inline">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-            </span>
-          </button>
-        </div>
-      </div>
+      {/* Mobile Menu Toggle Button */}
+      <button
+        onClick={() => setSidebarOpen(true)}
+        className="lg:hidden fixed top-4 left-4 p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200 transform hover:scale-110 z-30"
+      >
+        <Menu size={24} />
+      </button>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="flex-1 max-w-4xl mx-auto px-4 py-8 lg:ml-80">
         {renderContent()}
       </div>
     </div>
   );
 };
 
-export default App
+export default App;
