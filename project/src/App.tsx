@@ -15,7 +15,7 @@ import {
   X,
   Home,
   BookOpen,
-  MapIcon,
+  Map,
   Info
 } from 'lucide-react';
 
@@ -150,7 +150,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
     { icon: <Info size={20} />, label: 'About Us', href: '#' },
     { icon: <BookOpen size={20} />, label: 'Courses', href: '#' },
     { icon: <BookOpen size={20} />, label: 'Lane Journal', href: '#' },
-    { icon: <MapIcon size={20} />, label: 'Locations', href: '#' }
+    { icon: <Map size={20} />, label: 'Locations', href: '#' }
   ];
 
   return (
