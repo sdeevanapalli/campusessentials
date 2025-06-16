@@ -144,14 +144,24 @@ const RouteBadge: React.FC<{ route: string }> = ({ route }) => (
 );
 
 // Sidebar Navigation
-const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: string; onSectionChange: (section: string) => void }> = ({ 
+  isOpen, 
+  onClose, 
+  activeSection, 
+  onSectionChange 
+}) => {
   const menuItems = [
-    { icon: <Home size={20} />, label: 'Home', href: '#' },
-    { icon: <Info size={20} />, label: 'About Us', href: '#' },
-    { icon: <BookOpen size={20} />, label: 'Courses', href: '#' },
-    { icon: <BookOpen size={20} />, label: 'Lane Journal', href: '#' },
-    { icon: <Map size={20} />, label: 'Locations', href: '#' }
+    { icon: <Home size={20} />, label: 'Home', id: 'home' },
+    { icon: <Utensils size={20} />, label: 'Mess Menu', id: 'mess' },
+    { icon: <Map size={20} />, label: 'Map', id: 'map' },
+    { icon: <Info size={20} />, label: 'About', id: 'about' },
+    { icon: <Phone size={20} />, label: 'Thanks', id: 'thanks' }
   ];
+
+  const handleSectionClick = (sectionId: string) => {
+    onSectionChange(sectionId);
+    onClose(); // Close sidebar on mobile after selection
+  };
 
   return (
     <>
@@ -167,58 +177,41 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
       <div className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-        >
-          <X size={24} className="text-gray-600 dark:text-gray-300" />
-        </button>
-
-        {/* Logo */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-4">
-            <div className="text-white font-bold text-2xl">
-              <div className="grid grid-cols-2 gap-1">
-                <div className="w-2 h-2 bg-white rounded-sm"></div>
-                <div className="w-2 h-2 bg-white rounded-sm opacity-75"></div>
-                <div className="w-2 h-2 bg-white rounded-sm opacity-75"></div>
-                <div className="w-2 h-2 bg-white rounded-sm"></div>
-              </div>
-            </div>
+        {/* Header */}
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700">
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+          >
+            <X size={24} className="text-white" />
+          </button>
+          
+          <div className="text-white">
+            <h2 className="text-xl font-bold mb-1">Campus Essentials</h2>
+            <p className="text-blue-100 dark:text-orange-100 text-sm">BITS Pilani, Hyderabad Campus</p>
           </div>
         </div>
 
         {/* Menu Items */}
         <nav className="p-4 space-y-2">
           {menuItems.map((item, index) => (
-            <a
+            <button
               key={index}
-              href={item.href}
-              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transform hover:scale-105"
+              onClick={() => handleSectionClick(item.id)}
+              className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 text-left transform hover:scale-105 ${
+                activeSection === item.id
+                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+              }`}
             >
-              <div className="text-green-600 dark:text-green-400">
+              <div className={`${activeSection === item.id ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}`}>
                 {item.icon}
               </div>
               <span className="font-medium">{item.label}</span>
-            </a>
+            </button>
           ))}
         </nav>
-
-        {/* Social Links */}
-        <div className="absolute bottom-6 left-6 right-6">
-          <div className="flex justify-center space-x-4">
-            {['instagram', 'twitter', 'linkedin'].map((social) => (
-              <a
-                key={social}
-                href="#"
-                className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-100 dark:hover:bg-green-900 transition-all duration-200 transform hover:scale-110"
-              >
-                <div className="w-5 h-5 bg-gray-600 dark:bg-gray-300 rounded"></div>
-              </a>
-            ))}
-          </div>
-        </div>
       </div>
     </>
   );
@@ -228,16 +221,269 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle('dark');
     setIsDark(!isDark);
   };
 
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'home':
+        return (
+          <>
+            <CollapsibleSection title="Mess Timings" icon={<Utensils size={24} />} defaultOpen>
+              <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
+                <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
+                  <Clock size={16} className="mr-2 transition-transform duration-300 hover:rotate-180" />
+                  Mess Timings
+                </h3>
+                <div className="space-y-2 text-sm">
+                  {[
+                    ['Breakfast:', '08:00 AM - 9:30 AM'],
+                    ['Lunch:', '12:00 PM - 2:00 PM'],
+                    ['Dinner:', '7:30 PM - 09:00 PM']
+                  ].map(([meal, time], index) => (
+                    <div key={meal} className="flex justify-between transition-all duration-300 hover:bg-green-100 dark:hover:bg-green-800 p-2 rounded" style={{ animationDelay: `${index * 0.1}s` }}>
+                      <span className="font-medium">{meal}</span>
+                      <span>{time}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Food Outlets & Timings" icon={<Store size={24} />}>
+              <div className="space-y-3 text-sm">
+                {[
+                  ['Heritage Stationery', '10:00 AM - 7:00 PM (Sunday closed)'],
+                  ['Agarwal Supermarket', '9:00 AM - 9:00 PM'],
+                  ['Sri Sai Laundry', '9:00 AM - 9:00 PM (Monday closed)'],
+                  ['Pleasant', 'Closed for Summer Term', true],
+                  ['Agra Chat & Protein Isle', '1:30 PM - 10:00 PM'],
+                  ['Tea Time', '9:00 AM - 9:00 PM (Sunday closed)'],
+                  ['Karturi Stationery', '5:00 PM - 8:00 PM'],
+                  ['CP05 VVS Stores', '12:00 PM - 10:00 PM'],
+                  ['Vegetable Shop', '10:30 AM - 9:00 PM'],
+                  ['Amul', '1:00 PM - 10:00 PM'],
+                  ['Vijay Vahini', 'Closed for Summer Term', true],
+                  ['Thickshake', '11:00 AM - 9:00 PM'],
+                  ['Yummy\'s', '10:00 AM - 10:00 PM'],
+                  ['Hotspot', '10:00 AM - 12:00 AM'],
+                  ['Wich Please and SFC', 'Closed for Summer Term', true],
+                  ['Nescafe', 'Closed for Summer Term', true],
+                  ['Cafeteria', '8:00 AM - 8:00 PM']
+                ].map(([name, time, closed], index) => (
+                  <div key={index} className="transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 rounded" style={{ animationDelay: `${index * 0.05}s` }}>
+                    <h4 className="font-semibold text-gray-800 dark:text-white transition-colors duration-200">{name}</h4>
+                    <p className={`transition-colors duration-200 ${closed ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-gray-300'}`}>{time}</p>
+                  </div>
+                ))}
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Food Outlet Phone Numbers" icon={<Phone size={24} />}>
+              <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">Tap on a contact to call directly.</p>
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  ['Hotspot', '70133 34805'],
+                  ['Yummpies', '93814 23625']
+                ].map(([name, phone], index) => (
+                  <a
+                    key={name}
+                    href={`tel:${phone}`}
+                    className="bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-800 transition-all duration-300 transform hover:scale-102 hover:shadow-md"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-800 dark:text-white">{name}</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-mono">{phone}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Campus Auto Drivers' Numbers" icon={<Car size={24} />}>
+              <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+                We recommend contacting any available driver at random to ensure fair distribution of rides.
+              </p>
+              <AutoDriverGrid />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Warden Contact Info" icon={<User size={24} />}>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  ['Chief Warden Office', '040-66303629', 'Prof. Phaneendra Kiran C'],
+                  ['Chief Warden Mobile', '+91 90102 02882', 'Prof. Phaneendra Kiran C'],
+                  ['Warden - Krishna Bhavan Office', '040-66303632', 'Prof. Bandhan Bandhu Majumdar'],
+                  ['Warden - Krishna Bhavan Mobile', '+91 90102 00098', 'Prof. Bandhan Bandhu Majumdar'],
+                  ['Warden - Ram Bhavan Mobile', '+91 90102 02805', 'Prof. Syed Ershad Ahmed'],
+                  ['Superintendent - Krishna Bhavan', '+91 90102 02854', 'Mr. Haridas Appu'],
+                  ['Caretaker - Krishna Bhavan', '+91 94926 65896', 'Mr. Ravinder Reddy'], 
+                  ['Warden - Ganga Bhavan', '040-66303582', 'Prof. Ponnalagu R N']
+                ].map(([name, phone, warden], index) => (
+                  <div key={name} style={{ animationDelay: `${index * 0.1}s` }}>
+                    <ContactCard name={name} phone={phone} label={warden} />
+                  </div>
+                ))}
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="🚌 212 Bus Schedule (BPHC ↔ Secunderabad)" icon={<Bus size={24} />}>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
+                  <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
+                    <MapPin size={16} className="mr-2 transition-transform duration-300 hover:bounce" />
+                    From BPHC
+                  </h3>
+                  <div className="space-y-2">
+                    {['9:00 AM', '10:00 AM', '2:00 PM', '5:00 PM', '6:00 PM'].map((time, index) => (
+                      <div key={time} style={{ animationDelay: `${index * 0.1}s` }}>
+                        <BusScheduleItem time={time} color="text-green-700 dark:text-green-200" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg border border-blue-200 dark:border-blue-700 transition-all duration-300 hover:shadow-md">
+                  <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-3 flex items-center">
+                    <MapPin size={16} className="mr-2 transition-transform duration-300 hover:bounce" />
+                    From Secunderabad
+                  </h3>
+                  <div className="space-y-2">
+                    {['7:50 AM', '8:50 AM', '12:45 PM', '4:00 PM', '5:00 PM'].map((time, index) => (
+                      <div key={time} style={{ animationDelay: `${index * 0.1}s` }}>
+                        <BusScheduleItem time={time} color="text-blue-700 dark:text-blue-200" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Alternate Bus Routes" icon={<Bus size={24} />}>
+              <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700 mb-4 transition-all duration-300 hover:shadow-md">
+                <div className="flex items-center mb-2">
+                  <AlertTriangle size={20} className="text-yellow-600 mr-2 transition-transform duration-300 hover:rotate-12" />
+                  <span className="font-semibold text-yellow-800 dark:text-yellow-300">Important Note</span>
+                </div>
+                <p className="text-yellow-700 dark:text-yellow-100 text-sm">
+                  Confirm with the conductor before boarding to ensure it stops at your destination.
+                </p>
+              </div>
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:shadow-md">
+                <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
+                  From Secunderabad to Thumkunta/Tandoor Junction:
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    '211A', '211B', '211C', '211DY', '212T',
+                    '212/564', '212/567', '212/568', '212/702',
+                    '564', '567', '568'
+                  ].map((route, index) => (
+                    <div key={route} style={{ animationDelay: `${index * 0.05}s` }}>
+                      <RouteBadge route={route} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CollapsibleSection>
+          </>
+        );
+      case 'mess':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Utensils size={24} className="mr-3 text-blue-600" />
+              Weekly Mess Menu
+            </h2>
+            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg text-center">
+              <p className="text-blue-800 dark:text-blue-200">Weekly menu will be displayed here.</p>
+              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                Show Menu
+              </button>
+            </div>
+          </div>
+        );
+      case 'map':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Map size={24} className="mr-3 text-blue-600" />
+              Campus Map
+            </h2>
+            <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg text-center">
+              <p className="text-green-800 dark:text-green-200">Interactive campus map will be displayed here.</p>
+            </div>
+          </div>
+        );
+      case 'about':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Info size={24} className="mr-3 text-blue-600" />
+              About Campus Essentials
+            </h2>
+            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+              <p>
+                Campus Essentials is your one-stop resource for all important information about BITS Pilani, Hyderabad Campus.
+              </p>
+              <p>
+                This platform provides easy access to mess timings, food outlet information, contact numbers, transportation schedules, and more to help make campus life easier for students, faculty, and visitors.
+              </p>
+              <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+                <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Features:</h3>
+                <ul className="list-disc list-inside space-y-1 text-blue-700 dark:text-blue-300">
+                  <li>Real-time mess timings and menu information</li>
+                  <li>Food outlet schedules and contact numbers</li>
+                  <li>Campus auto driver contacts</li>
+                  <li>Warden and administrative contact information</li>
+                  <li>Bus schedules and route information</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      case 'thanks':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Phone size={24} className="mr-3 text-blue-600" />
+              Contact & Thanks
+            </h2>
+            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+              <p>
+                Thank you for using Campus Essentials! We hope this platform makes your campus experience more convenient.
+              </p>
+              <div className="bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-900 dark:to-orange-900 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-800 dark:text-white mb-2">Contact Information:</h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  For suggestions, updates, or technical issues, please reach out to the development team.
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Made with ❤️ for the BITS Pilani, Hyderabad Campus community
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
       {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar 
+        isOpen={sidebarOpen} 
+        onClose={() => setSidebarOpen(false)} 
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
 
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700 text-white py-4 px-4 transition-all duration-300 sticky top-0 z-30 shadow-lg">
@@ -274,165 +520,10 @@ const App: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <CollapsibleSection title="Mess Timings" icon={<Utensils size={24} />} defaultOpen>
-          <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
-            <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
-              <Clock size={16} className="mr-2 transition-transform duration-300 hover:rotate-180" />
-              Mess Timings
-            </h3>
-            <div className="space-y-2 text-sm">
-              {[
-                ['Breakfast:', '08:00 AM - 9:30 AM'],
-                ['Lunch:', '12:00 PM - 2:00 PM'],
-                ['Dinner:', '7:30 PM - 09:00 PM']
-              ].map(([meal, time], index) => (
-                <div key={meal} className="flex justify-between transition-all duration-300 hover:bg-green-100 dark:hover:bg-green-800 p-2 rounded" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <span className="font-medium">{meal}</span>
-                  <span>{time}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Food Outlets & Timings" icon={<Store size={24} />}>
-          <div className="space-y-3 text-sm">
-            {[
-              ['Heritage Stationery', '10:00 AM - 7:00 PM (Sunday closed)'],
-              ['Agarwal Supermarket', '9:00 AM - 9:00 PM'],
-              ['Sri Sai Laundry', '9:00 AM - 9:00 PM (Monday closed)'],
-              ['Pleasant', 'Closed for Summer Term', true],
-              ['Agra Chat & Protein Isle', '1:30 PM - 10:00 PM'],
-              ['Tea Time', '9:00 AM - 9:00 PM (Sunday closed)'],
-              ['Karturi Stationery', '5:00 PM - 8:00 PM'],
-              ['CP05 VVS Stores', '12:00 PM - 10:00 PM'],
-              ['Vegetable Shop', '10:30 AM - 9:00 PM'],
-              ['Amul', '1:00 PM - 10:00 PM'],
-              ['Vijay Vahini', 'Closed for Summer Term', true],
-              ['Thickshake', '11:00 AM - 9:00 PM'],
-              ['Yummy\'s', '10:00 AM - 10:00 PM'],
-              ['Hotspot', '10:00 AM - 12:00 AM'],
-              ['Wich Please and SFC', 'Closed for Summer Term', true],
-              ['Nescafe', 'Closed for Summer Term', true],
-              ['Cafeteria', '8:00 AM - 8:00 PM']
-            ].map(([name, time, closed], index) => (
-              <div key={index} className="transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 rounded" style={{ animationDelay: `${index * 0.05}s` }}>
-                <h4 className="font-semibold text-gray-800 dark:text-white transition-colors duration-200">{name}</h4>
-                <p className={`transition-colors duration-200 ${closed ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-gray-300'}`}>{time}</p>
-              </div>
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Food Outlet Phone Numbers" icon={<Phone size={24} />}>
-          <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">Tap on a contact to call directly.</p>
-          <div className="grid grid-cols-1 gap-3">
-            {[
-              ['Hotspot', '70133 34805'],
-              ['Yummpies', '93814 23625']
-            ].map(([name, phone], index) => (
-              <a
-                key={name}
-                href={`tel:${phone}`}
-                className="bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-800 transition-all duration-300 transform hover:scale-102 hover:shadow-md"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-800 dark:text-white">{name}</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-mono">{phone}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Campus Auto Drivers' Numbers" icon={<Car size={24} />}>
-          <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-            We recommend contacting any available driver at random to ensure fair distribution of rides.
-          </p>
-          <AutoDriverGrid />
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Warden Contact Info" icon={<User size={24} />}>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              ['Chief Warden Office', '040-66303629', 'Prof. Phaneendra Kiran C'],
-              ['Chief Warden Mobile', '+91 90102 02882', 'Prof. Phaneendra Kiran C'],
-              ['Warden - Krishna Bhavan Office', '040-66303632', 'Prof. Bandhan Bandhu Majumdar'],
-              ['Warden - Krishna Bhavan Mobile', '+91 90102 00098', 'Prof. Bandhan Bandhu Majumdar'],
-              ['Warden - Ram Bhavan Mobile', '+91 90102 02805', 'Prof. Syed Ershad Ahmed'],
-              ['Superintendent - Krishna Bhavan', '+91 90102 02854', 'Mr. Haridas Appu'],
-              ['Caretaker - Krishna Bhavan', '+91 94926 65896', 'Mr. Ravinder Reddy'], 
-              ['Warden - Ganga Bhavan', '040-66303582', 'Prof. Ponnalagu R N']
-            ].map(([name, phone, warden], index) => (
-              <div key={name} style={{ animationDelay: `${index * 0.1}s` }}>
-                <ContactCard name={name} phone={phone} label={warden} />
-              </div>
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="🚌 212 Bus Schedule (BPHC ↔ Secunderabad)" icon={<Bus size={24} />}>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
-              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
-                <MapPin size={16} className="mr-2 transition-transform duration-300 hover:bounce" />
-                From BPHC
-              </h3>
-              <div className="space-y-2">
-                {['9:00 AM', '10:00 AM', '2:00 PM', '5:00 PM', '6:00 PM'].map((time, index) => (
-                  <div key={time} style={{ animationDelay: `${index * 0.1}s` }}>
-                    <BusScheduleItem time={time} color="text-green-700 dark:text-green-200" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg border border-blue-200 dark:border-blue-700 transition-all duration-300 hover:shadow-md">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-3 flex items-center">
-                <MapPin size={16} className="mr-2 transition-transform duration-300 hover:bounce" />
-                From Secunderabad
-              </h3>
-              <div className="space-y-2">
-                {['7:50 AM', '8:50 AM', '12:45 PM', '4:00 PM', '5:00 PM'].map((time, index) => (
-                  <div key={time} style={{ animationDelay: `${index * 0.1}s` }}>
-                    <BusScheduleItem time={time} color="text-blue-700 dark:text-blue-200" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Alternate Bus Routes" icon={<Bus size={24} />}>
-          <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700 mb-4 transition-all duration-300 hover:shadow-md">
-            <div className="flex items-center mb-2">
-              <AlertTriangle size={20} className="text-yellow-600 mr-2 transition-transform duration-300 hover:rotate-12" />
-              <span className="font-semibold text-yellow-800 dark:text-yellow-300">Important Note</span>
-            </div>
-            <p className="text-yellow-700 dark:text-yellow-100 text-sm">
-              Confirm with the conductor before boarding to ensure it stops at your destination.
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:shadow-md">
-            <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
-              From Secunderabad to Thumkunta/Tandoor Junction:
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {[
-                '211A', '211B', '211C', '211DY', '212T',
-                '212/564', '212/567', '212/568', '212/702',
-                '564', '567', '568'
-              ].map((route, index) => (
-                <div key={route} style={{ animationDelay: `${index * 0.05}s` }}>
-                  <RouteBadge route={route} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </CollapsibleSection>
+        {renderContent()}
       </div>
     </div>
   );
 };
 
-export default App;
+export default App
