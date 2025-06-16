@@ -291,12 +291,14 @@ const App: React.FC = () => {
         <CollapsibleSection title="Warden Contact Info" icon={<User size={24} />}>
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              ['Krishna Bhavan', '+91 98765 43213', 'Warden: Dr. Smith'],
-              ['Budh Bhavan', '+91 98765 43214', 'Warden: Dr. Johnson'],
-              ['Meera Bhavan', '+91 98765 43215', 'Warden: Dr. Patel'],
-              ['Malviya Bhavan', '+91 98765 43216', 'Warden: Dr. Kumar'],
-              ['Vyas Bhavan', '+91 98765 43217', 'Warden: Dr. Singh'],
-              ['Ram Bhavan', '+91 98765 43218', 'Warden: Dr. Sharma']
+              ['Chief Warden Office', '040-66303629', 'Prof. Phaneendra Kiran C'],
+              ['Chief Warden Mobile', '+91 90102 02882', 'Prof. Phaneendra Kiran C'],
+              ['Warden - Krishna Bhavan Office', '040-66303632', 'Prof. Bandhan Bandhu Majumdar'],
+              ['Warden - Krishna Bhavan Mobile', '+91 90102 00098', 'Prof. Bandhan Bandhu Majumdar'],
+              ['Warden - Ram Bhavan Mobile', '+91 90102 02805', 'Prof. Syed Ershad Ahmed'],
+              ['Superintendent - Krishna Bhavan', '+91 90102 02854', 'Mr. Haridas Appu'],
+              ['Caretaker - Krishna Bhavan', '+91 94926 65896', 'Mr. Ravinder Reddy'], 
+              ['Warden - Ganga Bhavan', '040-66303582', 'Prof. Ponnalagu R N']
             ].map(([name, phone, warden], index) => (
               <div key={name} style={{ animationDelay: `${index * 0.1}s` }}>
                 <ContactCard name={name} phone={phone} label={warden} />
