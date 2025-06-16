@@ -10,7 +10,13 @@ import {
   Phone,
   Utensils,
   MapPin,
-  AlertTriangle
+  AlertTriangle,
+  Menu,
+  X,
+  Home,
+  BookOpen,
+  MapIcon,
+  Info
 } from 'lucide-react';
 
 // Collapsible Section with smooth animations
@@ -69,34 +75,6 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         </div>
       </div>
     </div>
-  );
-};
-
-// Mess Menu with slide animation
-const MessMenuToggle: React.FC = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  
-  return (
-    <>
-      <button
-        onClick={() => setShowMenu(!showMenu)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm font-medium transform hover:scale-105 active:scale-95"
-      >
-        <span className="flex items-center space-x-2">
-          <span>{showMenu ? 'Hide Menu' : 'Show Menu'}</span>
-          <ChevronDown className={`transition-transform duration-300 ${showMenu ? 'rotate-180' : 'rotate-0'}`} size={16} />
-        </span>
-      </button>
-      <div className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${showMenu ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className={`transition-all duration-500 ${showMenu ? 'transform translate-y-0' : 'transform -translate-y-4'}`}>
-          <img
-            src="/menu-photo.jpg"
-            alt="Mess Menu"
-            className="w-full rounded-lg shadow-md"
-          />
-        </div>
-      </div>
-    </>
   );
 };
 
@@ -165,9 +143,91 @@ const RouteBadge: React.FC<{ route: string }> = ({ route }) => (
   </span>
 );
 
+// Sidebar Navigation
+const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  const menuItems = [
+    { icon: <Home size={20} />, label: 'Home', href: '#' },
+    { icon: <Info size={20} />, label: 'About Us', href: '#' },
+    { icon: <BookOpen size={20} />, label: 'Courses', href: '#' },
+    { icon: <BookOpen size={20} />, label: 'Lane Journal', href: '#' },
+    { icon: <MapIcon size={20} />, label: 'Locations', href: '#' }
+  ];
+
+  return (
+    <>
+      {/* Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+        >
+          <X size={24} className="text-gray-600 dark:text-gray-300" />
+        </button>
+
+        {/* Logo */}
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-4">
+            <div className="text-white font-bold text-2xl">
+              <div className="grid grid-cols-2 gap-1">
+                <div className="w-2 h-2 bg-white rounded-sm"></div>
+                <div className="w-2 h-2 bg-white rounded-sm opacity-75"></div>
+                <div className="w-2 h-2 bg-white rounded-sm opacity-75"></div>
+                <div className="w-2 h-2 bg-white rounded-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Menu Items */}
+        <nav className="p-4 space-y-2">
+          {menuItems.map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transform hover:scale-105"
+            >
+              <div className="text-green-600 dark:text-green-400">
+                {item.icon}
+              </div>
+              <span className="font-medium">{item.label}</span>
+            </a>
+          ))}
+        </nav>
+
+        {/* Social Links */}
+        <div className="absolute bottom-6 left-6 right-6">
+          <div className="flex justify-center space-x-4">
+            {['instagram', 'twitter', 'linkedin'].map((social) => (
+              <a
+                key={social}
+                href="#"
+                className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-100 dark:hover:bg-green-900 transition-all duration-200 transform hover:scale-110"
+              >
+                <div className="w-5 h-5 bg-gray-600 dark:bg-gray-300 rounded"></div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
 // Main App
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle('dark');
@@ -176,16 +236,27 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
+      {/* Sidebar */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700 text-white py-6 px-4 transition-all duration-300">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
-          <div className="transform transition-all duration-500 hover:scale-105">
-            <h1 className="text-3xl md:text-4xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-              Campus Essentials
-            </h1>
-            <p className="text-blue-100 dark:text-orange-100 text-lg transition-colors duration-300">
-              BITS Pilani, Hyderabad Campus
-            </p>
+      <div className="bg-gradient-to-r from-blue-600 to-orange-500 dark:from-gray-800 dark:to-gray-700 text-white py-4 px-4 transition-all duration-300 sticky top-0 z-30 shadow-lg">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 rounded-lg hover:bg-white/10 transition-all duration-200 transform hover:scale-110"
+            >
+              <Menu size={24} />
+            </button>
+            <div className="transform transition-all duration-500 hover:scale-105">
+              <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                Campus Essentials
+              </h1>
+              <p className="text-blue-100 dark:text-orange-100 text-sm md:text-base transition-colors duration-300">
+                BITS Pilani, Hyderabad Campus
+              </p>
+            </div>
           </div>
           <button
             onClick={toggleDarkMode}
@@ -195,7 +266,7 @@ const App: React.FC = () => {
               <span className={`transition-transform duration-500 ${isDark ? 'rotate-180' : 'rotate-0'}`}>
                 {isDark ? '☀️' : '🌙'}
               </span>
-              <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+              <span className="hidden sm:inline">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
             </span>
           </button>
         </div>
@@ -203,29 +274,23 @@ const App: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <CollapsibleSection title="Mess Timings & Menu" icon={<Utensils size={24} />} defaultOpen>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
-              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
-                <Clock size={16} className="mr-2 transition-transform duration-300 hover:rotate-180" />
-                Mess Timings
-              </h3>
-              <div className="space-y-2 text-sm">
-                {[
-                  ['Breakfast:', '08:00 AM - 9:30 AM'],
-                  ['Lunch:', '12:00 PM - 2:00 PM'],
-                  ['Dinner:', '7:30 PM - 09:00 PM']
-                ].map(([meal, time], index) => (
-                  <div key={meal} className="flex justify-between transition-all duration-300 hover:bg-green-100 dark:hover:bg-green-800 p-2 rounded" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <span className="font-medium">{meal}</span>
-                    <span>{time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg border border-blue-200 dark:border-blue-700 transition-all duration-300 hover:shadow-md">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-3">Weekly Menu</h3>
-              <MessMenuToggle />
+        <CollapsibleSection title="Mess Timings" icon={<Utensils size={24} />} defaultOpen>
+          <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
+            <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
+              <Clock size={16} className="mr-2 transition-transform duration-300 hover:rotate-180" />
+              Mess Timings
+            </h3>
+            <div className="space-y-2 text-sm">
+              {[
+                ['Breakfast:', '08:00 AM - 9:30 AM'],
+                ['Lunch:', '12:00 PM - 2:00 PM'],
+                ['Dinner:', '7:30 PM - 09:00 PM']
+              ].map(([meal, time], index) => (
+                <div key={meal} className="flex justify-between transition-all duration-300 hover:bg-green-100 dark:hover:bg-green-800 p-2 rounded" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <span className="font-medium">{meal}</span>
+                  <span>{time}</span>
+                </div>
+              ))}
             </div>
           </div>
         </CollapsibleSection>
