@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import {
   ChevronDown,
   ChevronUp,
@@ -22,10 +23,10 @@ import {
 } from 'lucide-react';
 
 import ReactGA from "react-ga4";
+import { Analytics } from '@vercel/analytics/react';
 
 ReactGA.initialize("G-9EG5HKKXP1"); // your GA measurement ID
 ReactGA.send("pageview");
-
 
 // Collapsible Section with smooth animations
 interface CollapsibleSectionProps {
@@ -339,7 +340,7 @@ const App: React.FC = () => {
               </div>
             </CollapsibleSection>
 
-            <CollapsibleSection title="🚌 212 Bus Schedule (BPHC ↔ Secunderabad)" icon={<Bus size={24} />}>
+            <CollapsibleSection title="212 Bus Schedule (BPHC ↔ Secunderabad)" icon={<Bus size={24} />}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
                   <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
@@ -399,153 +400,142 @@ const App: React.FC = () => {
             </CollapsibleSection>
           </>
         );
-case 'mess':
-  return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 overflow-x-auto">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-        <Utensils size={24} className="mr-3 text-blue-600" />
-        Weekly Mess Menu
-      </h2>
-      <table className="table-auto w-full text-sm sm:text-base border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
-        <thead className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white">
-          <tr>
-            <th className="p-2 border dark:border-gray-600">Day</th>
-            <th className="p-2 border dark:border-gray-600">Breakfast</th>
-            <th className="p-2 border dark:border-gray-600">Lunch</th>
-            <th className="p-2 border dark:border-gray-600">Dinner</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-          {[
-            ['Mon', 'TEA, COFFEE, IDLY SAMBAR, CHUTNEY, STUFF KULCHA', 'RAJMA MASALA, ALOO BHENDI DRY, DAL, ROTI, SAMBAR, WHITE RICE, CURD, SALAD, CHUTNEY, PAPAD/FRYUMS', 'TENDLY FRY, TOMATO DAL, VEG KOLAPURI MASOL, RASAM, ROTI, RICE, CURD, PICKLE LADDOO'],
-            ['Tue', 'TEA, COFFEE, POHA, CHUTNEY, VADA, SAMBAR', 'ALOO MATAR CURRY, ROTI, CABBAGE DRY, DAL FRY, RASAM, WHITE RICE, CURD, CHUTNEY, PAPAD/FRYUMS', 'DAL TADKA, BHENDI DRY, BLACK CHANA GRAVY, SAMBAR, SALAD, ROTI, RICE, CURD, PICKLE'],
-            ['Wed', 'TEA, COFFEE, ONION UTHAPPAM, ALOO PARATHA, CURD, CHUTNEY, SAMBAR', 'PALAK DAL, ROTI, SAMBAR, WHITE RICE, WHITE BATANA CURRY, CARROT BEANS DRY, SALAD, CHUTNEY, CURD', 'DAL TADKA, RAJMA MASALA, BOTTLE GOURD DRY, ROTI, RICE, CURD, RASAM, PICKLE BESAN BURFI'],
-            ['Thu', 'TEA, COFFEE, RAWA IDLY, SAMBAR, CHUTNEY, AJWAIN PARATHA, VEG KURMA', 'TOMATO DAL, ROTI, RASAM, WHITE RICE, TAVA VEG, BLACK CHANA MASALA, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'NAVRATNA DAL, SAMBAR, BAIGAN BHARTA DRY, SALAD, ROTI, RICE, CURD, GOBI MASALA, PICKLE'],
-            ['Fri', 'TEA, COFFEE, TOMATO BATH, MASALA DOSA, SAMBAR, CHUTNEY', 'DAL FRY, ROTI, RASAM, WHITE RICE, KARLA SOYA GRAVY, CABBAGE MUTTER DRY, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'ROTI, KADAL VEG DRY, DUM ALOO GRAVY, RASAM, DAL, RICE MOTICHUR LADOO'],
-            ['Sat', 'TEA, COFFEE, PORI BHAJI, MIX VEG UTHAPPAM, SAMBAR, CHUTNEY', 'DAL, ROTI, SAMBAR, WHITE RICE, SOYA BIN DRY, LOBIYA CURRY, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'DAL MAKHANI, ALOO METHI DRY, MANCHURIAN SEMI, SALAD, ROTI, RICE, CURD, RASAM, PICKLE'],
-            ['Sun', 'TEA, COFFEE, PESARATTU DOSA, UPMA, CHUTNEY', 'GONGURA DAL, ROTI, SAMBAR, WHITE RICE, POTATO GOBI MASALA DRY, KADI, PAKODI, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'SOYABIN DRY, DAL TADKA, GREEN PEAS TOMATO MASALA, SALAD, ROTI, RICE, CURD, RASAM ANY KHEER'],
-          ].map(([day, breakfast, lunch, dinner], i) => (
-            <tr key={i} className="hover:bg-gray-100 dark:hover:bg-gray-800">
-              <td className="p-2 border dark:border-gray-600">{day}</td>
-              <td className="p-2 border dark:border-gray-600">{breakfast}</td>
-              <td className="p-2 border dark:border-gray-600">{lunch}</td>
-              <td className="p-2 border dark:border-gray-600">{dinner}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-
-case 'map':
-  return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
-      {/* Header */}
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-        <Map size={24} className="mr-3 text-blue-600" />
-        Campus Map
-      </h2>
-
-      {/* Description */}
-      <p className="mb-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">
-        Here's an embedded Google Map view of BITS Hyderabad.
-      </p>
-
-      {/* Embedded Map */}
-      <div className="rounded-xl overflow-hidden border dark:border-gray-700">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30469.05008797916!2d78.56234073499547!3d17.544873223369834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9333031aa9e7%3A0x93de88c95ea93376!2sBirla%20Institute%20of%20Technology%20and%20Science%2C%20Pilani%20-%20Hyderabad%20Campus!5e0!3m2!1sen!2sin!4v1718180900000!5m2!1sen!2sin"
-          width="100%"
-          height="400"
-          loading="lazy"
-          allowFullScreen
-          className="w-full"
-        ></iframe>
-      </div>
-    </div>
-  );
-
+      case 'mess':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 overflow-x-auto">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Utensils size={24} className="mr-3 text-blue-600" />
+              Weekly Mess Menu
+            </h2>
+            <table className="table-auto w-full text-sm sm:text-base border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+              <thead className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white">
+                <tr>
+                  <th className="p-2 border dark:border-gray-600">Day</th>
+                  <th className="p-2 border dark:border-gray-600">Breakfast</th>
+                  <th className="p-2 border dark:border-gray-600">Lunch</th>
+                  <th className="p-2 border dark:border-gray-600">Dinner</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+                {[
+                  ['Mon', 'TEA, COFFEE, IDLY SAMBAR, CHUTNEY, STUFF KULCHA', 'RAJMA MASALA, ALOO BHENDI DRY, DAL, ROTI, SAMBAR, WHITE RICE, CURD, SALAD, CHUTNEY, PAPAD/FRYUMS', 'TENDLY FRY, TOMATO DAL, VEG KOLAPURI MASOL, RASAM, ROTI, RICE, CURD, PICKLE LADDOO'],
+                  ['Tue', 'TEA, COFFEE, POHA, CHUTNEY, VADA, SAMBAR', 'ALOO MATAR CURRY, ROTI, CABBAGE DRY, DAL FRY, RASAM, WHITE RICE, CURD, CHUTNEY, PAPAD/FRYUMS', 'DAL TADKA, BHENDI DRY, BLACK CHANA GRAVY, SAMBAR, SALAD, ROTI, RICE, CURD, PICKLE'],
+                  ['Wed', 'TEA, COFFEE, ONION UTHAPPAM, ALOO PARATHA, CURD, CHUTNEY, SAMBAR', 'PALAK DAL, ROTI, SAMBAR, WHITE RICE, WHITE BATANA CURRY, CARROT BEANS DRY, SALAD, CHUTNEY, CURD', 'DAL TADKA, RAJMA MASALA, BOTTLE GOURD DRY, ROTI, RICE, CURD, RASAM, PICKLE BESAN BURFI'],
+                  ['Thu', 'TEA, COFFEE, RAWA IDLY, SAMBAR, CHUTNEY, AJWAIN PARATHA, VEG KURMA', 'TOMATO DAL, ROTI, RASAM, WHITE RICE, TAVA VEG, BLACK CHANA MASALA, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'NAVRATNA DAL, SAMBAR, BAIGAN BHARTA DRY, SALAD, ROTI, RICE, CURD, GOBI MASALA, PICKLE'],
+                  ['Fri', 'TEA, COFFEE, TOMATO BATH, MASALA DOSA, SAMBAR, CHUTNEY', 'DAL FRY, ROTI, RASAM, WHITE RICE, KARLA SOYA GRAVY, CABBAGE MUTTER DRY, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'ROTI, KADAL VEG DRY, DUM ALOO GRAVY, RASAM, DAL, RICE MOTICHUR LADOO'],
+                  ['Sat', 'TEA, COFFEE, PORI BHAJI, MIX VEG UTHAPPAM, SAMBAR, CHUTNEY', 'DAL, ROTI, SAMBAR, WHITE RICE, SOYA BIN DRY, LOBIYA CURRY, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'DAL MAKHANI, ALOO METHI DRY, MANCHURIAN SEMI, SALAD, ROTI, RICE, CURD, RASAM, PICKLE'],
+                  ['Sun', 'TEA, COFFEE, PESARATTU DOSA, UPMA, CHUTNEY', 'GONGURA DAL, ROTI, SAMBAR, WHITE RICE, POTATO GOBI MASALA DRY, KADI, PAKODI, SALAD, CHUTNEY, CURD, PAPAD/FRYUMS', 'SOYABIN DRY, DAL TADKA, GREEN PEAS TOMATO MASALA, SALAD, ROTI, RICE, CURD, RASAM ANY KHEER'],
+                ].map(([day, breakfast, lunch, dinner], i) => (
+                  <tr key={i} className="hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <td className="p-2 border dark:border-gray-600">{day}</td>
+                    <td className="p-2 border dark:border-gray-600">{breakfast}</td>
+                    <td className="p-2 border dark:border-gray-600">{lunch}</td>
+                    <td className="p-2 border dark:border-gray-600">{dinner}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'map':
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Map size={24} className="mr-3 text-blue-600" />
+              Campus Map
+            </h2>
+            <p className="mb-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">
+              Here's an embedded Google Map view of BITS Hyderabad.
+            </p>
+            <div className="rounded-xl overflow-hidden border dark:border-gray-700">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30469.05008797916!2d78.56234073499547!3d17.544873223369834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9333031aa9e7%3A0x93de88c95ea93376!2sBirla%20Institute%20of%20Technology%20and%20Science%2C%20Pilani%20-%20Hyderabad%20Campus!5e0!3m2!1sen!2sin!4v1718180900000!5m2!1sen!2sin"
+                width="100%"
+                height="400"
+                loading="lazy"
+                allowFullScreen
+                className="w-full"
+              ></iframe>
+            </div>
+          </div>
+        );
       case 'about':
-  return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-        <Info size={24} className="mr-3 text-blue-600" />
-        About Campus Essentials
-      </h2>
-      <div className="space-y-4 text-gray-700 dark:text-gray-300">
-        <p>
-          This website is built by{' '}
-          <strong>
-            <a
-              href="https://www.linkedin.com/in/sdeevanapalli"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black-700 dark:text-black-400"
-            >
-              Shriniketh Deevanapalli
-            </a>
-          </strong>{' '}
-          and <strong>
-            <a
-              href="https://www.linkedin.com/in/kushagra-singh47/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black-700 dark:text-black-400"
-            >
-              Kushagra Singh
-            </a>
-          </strong> as a utility hub for BITS Hyderabad students.
-          The idea is to simplify access to campus resources, information, and services.
-        </p>
-        <p>
-          Our aim is to bring commonly used details like the mess menu, contacts, and map
-          together in one place with a clean, responsive interface.
-        </p>
-        <p>
-          Feel free to reach out for suggestions or contributions!
-        </p>
-      </div>
-    </div>
-  );
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+              <Info size={24} className="mr-3 text-blue-600" />
+              About Campus Essentials
+            </h2>
+            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+              <p>
+                This website is built by{' '}
+                <strong>
+                  <a
+                    href="https://www.linkedin.com/in/sdeevanapalli"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-black-700 dark:text-black-400"
+                  >
+                    Shriniketh Deevanapalli
+                  </a>
+                </strong>{' '}
+                and <strong>
+                  <a
+                    href="https://www.linkedin.com/in/kushagra-singh47/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-black-700 dark:text-black-400"
+                  >
+                    Kushagra Singh
+                  </a>
+                </strong> as a utility hub for BITS Hyderabad students.
+                The idea is to simplify access to campus resources, information, and services.
+              </p>
+              <p>
+                Our aim is to bring commonly used details like the mess menu, contacts, and map
+                together in one place with a clean, responsive interface.
+              </p>
+              <p>
+                Feel free to reach out for suggestions or contributions!
+              </p>
+            </div>
+          </div>
+        );
       case 'thanks':
-  return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
-        Thank You!
-      </h2>
-      <p className="text-lg text-center text-gray-700 dark:text-gray-300 mb-6">
-        This website was built with love and dedication to simplify campus life for students.
-      </p>
-
-      <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Creators</h3>
-        <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-          <li>Shriniketh Deevanapalli</li>
-          <li>Kushagra Singh</li>
-        </ul>
-      </div>
-
-      <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Contributors</h3>
-        <p className="mb-2 text-gray-700 dark:text-gray-300">
-          Special thanks to these people who have provided the auto numbers operating at Main Gate:
-        </p>
-        <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
-          <li>Viswanath Reddy</li>
-          <li>Shreyas Reddy</li>
-          <li>Mohammed Abdul Rahman Khan</li>
-          <li>Harsha Sista</li>
-          <li>Rohit Dwivedula</li>
-          <li>Rushabh Musthyala</li>
-        </ul>
-      </div>
-
-      <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-10">
-        We sincerely thank everyone who supported us in making this project a reality.
-      </p>
-    </div>
-  );
-
+        return (
+          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
+              Thank You!
+            </h2>
+            <p className="text-lg text-center text-gray-700 dark:text-gray-300 mb-6">
+              This website was built with love and dedication to simplify campus life for students.
+            </p>
+            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Creators</h3>
+              <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
+                <li>Shriniketh Deevanapalli</li>
+                <li>Kushagra Singh</li>
+              </ul>
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Contributors</h3>
+              <p className="mb-2 text-gray-700 dark:text-gray-300">
+                Special thanks to these people who have provided the auto numbers operating at Main Gate:
+              </p>
+              <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
+                <li>Viswanath Reddy</li>
+                <li>Shreyas Reddy</li>
+                <li>Mohammed Abdul Rahman Khan</li>
+                <li>Harsha Sista</li>
+                <li>Rohit Dwivedula</li>
+                <li>Rushabh Musthyala</li>
+              </ul>
+            </div>
+            <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-10">
+              We sincerely thank everyone who supported us in making this project a reality.
+            </p>
+          </div>
+        );
       default:
         return null;
     }
@@ -598,8 +588,9 @@ case 'map':
       <div className="max-w-4xl mx-auto px-4 py-8">
         {renderContent()}
       </div>
+      <Analytics />
     </div>
   );
 };
 
-export default App
+export default App;
