@@ -221,7 +221,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: s
 
 // Main App
 const App: React.FC = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -442,7 +442,7 @@ case 'map':
 
       {/* Description */}
       <p className="mb-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">
-        Here's an embedded Google Map view of BITS Hyderabad to help students and visitors navigate the campus.
+        Here's an embedded Google Map view of BITS Hyderabad.
       </p>
 
       {/* Embedded Map */}
@@ -474,12 +474,21 @@ case 'map':
               href="https://www.linkedin.com/in/sdeevanapalli"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-700 dark:text-blue-400 underline"
+              className="text-black-700 dark:text-black-400"
             >
               Shriniketh Deevanapalli
             </a>
           </strong>{' '}
-          and <strong>Kushagra Singh</strong> as a utility hub for BITS Hyderabad students.
+          and <strong>
+            <a
+              href="https://www.linkedin.com/in/kushagra-singh47/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black-700 dark:text-black-400"
+            >
+              Kushagra Singh
+            </a>
+          </strong> as a utility hub for BITS Hyderabad students.
           The idea is to simplify access to campus resources, information, and services.
         </p>
         <p>
