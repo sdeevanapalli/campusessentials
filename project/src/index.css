@@ -1,10 +1,13 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Optional: smooth transition */
-html {
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior-y: contain;
+  background-color: inherit;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
