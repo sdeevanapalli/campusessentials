@@ -23,7 +23,7 @@ import {
 
 import ReactGA from "react-ga4";
 
-ReactGA.initialize("G-KD1WLMW3ZG"); // your GA measurement ID
+ReactGA.initialize("G-9EG5HKKXP1"); // your GA measurement ID
 ReactGA.send("pageview");
 
 
