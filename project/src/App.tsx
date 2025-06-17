@@ -103,7 +103,7 @@ const ContactCard: React.FC<{ name: string; phone: string; label?: string }> = (
   </div>
 );
 
-// Auto Driver Grid with staggered animations
+// Auto Driver Grid with staggered animations (light blue theme)
 const AutoDriverGrid: React.FC = () => {
   const drivers = [
     '96035 11629', '98481 65044', '99484 83171', '90000 92037',
@@ -120,11 +120,11 @@ const AutoDriverGrid: React.FC = () => {
         <a
           key={index}
           href={`tel:${phone}`}
-          className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900 dark:to-red-900 p-3 rounded-lg text-center hover:from-orange-100 hover:to-red-100 dark:hover:from-orange-800 dark:hover:to-red-800 transition-all duration-300 border border-orange-200 dark:border-orange-700 hover:border-orange-300 transform hover:scale-105 hover:shadow-md"
+          className="bg-gradient-to-r from-blue-100 to-blue-300 dark:from-blue-700 dark:to-blue-900 p-3 rounded-lg text-center hover:from-blue-200 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-blue-800 transition-all duration-300 border border-blue-300 dark:border-blue-700 hover:border-blue-400 transform hover:scale-105 hover:shadow-md"
           style={{ animationDelay: `${index * 0.05}s` }}
         >
           <div className="text-sm font-medium text-gray-700 dark:text-white mb-1 transition-colors duration-200">{index + 1}</div>
-          <div className="text-sm font-mono text-orange-700 dark:text-orange-300 transition-colors duration-200">{phone}</div>
+          <div className="text-sm font-mono text-blue-700 dark:text-blue-300 transition-colors duration-200">{phone}</div>
         </a>
       ))}
     </div>
