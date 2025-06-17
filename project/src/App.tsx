@@ -21,6 +21,12 @@ import {
   Info
 } from 'lucide-react';
 
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-KD1WLMW3ZG"); // your GA measurement ID
+ReactGA.send("pageview");
+
+
 // Collapsible Section with smooth animations
 interface CollapsibleSectionProps {
   title: string;
