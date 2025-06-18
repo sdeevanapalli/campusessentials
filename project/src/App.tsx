@@ -112,14 +112,16 @@ const ContactCard: React.FC<{ name: string; phone: string; label?: string }> = (
 
 // Auto Driver Grid with staggered animations (light blue theme)
 const AutoDriverGrid: React.FC = () => {
-  const drivers = [
-    '96035 11629', '98481 65044', '99484 83171', '90000 92037',
-    '63025 36271', '98664 72092', '99599 78917', '96768 07459',
-    '99484 83171', '77023 86068', '95533 75890', '90106 97472',
-    '97055 52391', '98481 65044', '95248 76740', '98664 72092',
-    '90107 90411', '99484 83171', '90000 92037', '98481 28649',
-    '91775 20097', '80740 12874', '86869 37544'
-  ];
+const drivers = [
+  '96035 11629', '98481 65044', '99484 83171', '90000 92037',
+  '63025 36271', '98664 72092', '99599 78917', '96768 07459',
+  '77023 86068', '95533 75890', '90106 97472', '97055 52391',
+  '95248 76740', '98481 28649', '91775 20097', '80740 12874',
+  '86869 37544', '90107 90411', '9951419388', '9912175784',
+  '6302014403', '9908133959', '9948934098', '9542876740',
+  '9989396607', '9705495353', '6281598329', '7416118766'
+];
+
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -270,7 +272,7 @@ const App: React.FC = () => {
                   ['Agarwal Supermarket', '9:00 AM - 9:00 PM'],
                   ['Sri Sai Laundry', '9:00 AM - 9:00 PM (Monday closed)'],
                   ['Pleasant', 'Closed for Summer Term', true],
-                  ['Agra Chat & Protein Isle', '1:30 PM - 10:00 PM'],
+                  ['Agra Chat & Protein Isle', '1:30 AM - 10:00 PM'],
                   ['Tea Time', '9:00 AM - 9:00 PM (Sunday closed)'],
                   ['Karturi Stationery', '5:00 PM - 8:00 PM'],
                   ['CP05 VVS Stores', '12:00 PM - 10:00 PM'],
@@ -278,7 +280,7 @@ const App: React.FC = () => {
                   ['Amul', '1:00 PM - 10:00 PM'],
                   ['Vijay Vahini', 'Closed for Summer Term', true],
                   ['Thickshake', '11:00 AM - 9:00 PM'],
-                  ['Yummpy\'s', '10:00 AM - 10:00 PM'],
+                  ['Yummpy\'s', '10:00 AM - 02:00 AM'],
                   ['Hotspot', '10:00 AM - 12:00 AM'],
                   ['Wich Please and SFC', 'Closed for Summer Term', true],
                   ['Nescafe', 'Closed for Summer Term', true],
