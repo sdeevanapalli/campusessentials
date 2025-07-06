@@ -279,7 +279,7 @@ const App: React.FC = () => {
                   ['CP05 VVS Stores', '12:00 PM - 10:00 PM'],
                   ['Vegetable Shop', '10:30 AM - 9:00 PM'],
                   ['Amul', '1:00 PM - 10:00 PM'],
-                  ['Vijay Vahini', 'Closed for Summer Term', true],
+                  ['Vijay Vahini', '12:00 PM - 10:00 PM'],
                   ['Thickshake', '11:00 AM - 9:00 PM'],
                   ['Yummpy\'s', '10:00 AM - 02:00 AM'],
                   ['Hotspot', '10:00 AM - 12:00 AM'],
