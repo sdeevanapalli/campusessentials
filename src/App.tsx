@@ -260,7 +260,7 @@ const locations = [
   { id: 'ofg', name: 'Old Football Ground', lat: 17.54359745113174, lng: 78.57499151300111, desc: "Comes alive at night. Great spot for chill, impromptu matches and kicking back with the gang." },
   { id: 'nfg', name: 'New Football Ground', lat: 17.540979058114377, lng: 78.57617359351049, desc: "The fancier turf where official matches take place during fests. Still open for casual games when it is free; mix of pro vibes and chill scenes." },
   { id: 'cg', name: 'Cricket Ground', lat: 17.539821974494863, lng: 78.57731941388154, desc: "Classic spot for gully-style cricket or full-blown matches. Always buzzing in the evenings with bat, ball, and banter." },
-  { id: 'vg', name: 'Volleyball Ground', lat: 17.54299589606132, lng: 78.57538012811001, desc: "Classic spot for gully-style cricket or full-blown matches. Always buzzing in the evenings with bat, ball, and banter." },  
+  { id: 'vg', name: 'Volleyball Ground', lat: 17.54299589606132, lng: 78.57538012811001, desc: "Volleyball Ground right beside kabaddi and Amul. A solid combo of action and refreshment." },  
   { id: 'nab', name: 'New Academic Block / Chess Courtyard', lat: 17.545894062510076, lng: 78.5695917200961, desc: "New Academic Block is where a forgotten chess courtyard and a lone eatery quietly coexist." },  
   { id: 'oab', name: 'Old Academic Block / Library Lawns', lat: 17.545179101144704, lng: 78.57116941506344, desc: "Old Academic Block is where things actually happen louder busier and way more alive than its newer sleepy sibling." },  
   { id: 'valmiki', name: 'Valmiki Bhavan', lat: 17.545872952669946, lng: 78.57470692913476},  //bhavans start from here
