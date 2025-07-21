@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
 import {
   ChevronDown,
   ChevronUp,
@@ -12,15 +13,17 @@ import {
   Utensils,
   HeartHandshake,
   Handshake,
-  MapPin,
   AlertTriangle,
   Menu,
   X,
   Home,
   BookOpen,
   Map,
-  Info
+  Info,
+  MapPin,
 } from 'lucide-react';
+
+import 'leaflet/dist/leaflet.css';
 
 import ReactGA from "react-ga4";
 import { Analytics } from '@vercel/analytics/react';
@@ -121,7 +124,6 @@ const drivers = [
   '6302014403', '9908133959', '9948934098', '9542876740',
   '9989396607', '9705495353', '6281598329', '7416118766'
 ];
-
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -228,11 +230,67 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: s
   );
 };
 
+// Component to update map view on location change
+const ChangeView = ({ center }: { center: [number, number] }) => {
+  const map = useMap();
+  map.setView(center);
+  return null;
+};
+
 // Main App
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+const locations = [
+  { id: 'SAC', name: 'SAC', lat: 17.54090448861708, lng: 78.57527103665713, desc: "The Student Activities Centre (SAC) hosts club rooms, a dance room, gym, and space for practice and meetings. Great place for rehearsals or chilling." },
+  { id: 'mess1', name: 'Mess 1', lat: 17.542382724185554, lng: 78.57383333595718, desc: "Mess 1 is the hotspot on campus. It's where most students eat, meet, and chill after classes. You'll often find music and friends hanging around here." },
+  { id: 'mess2', name: 'Mess 2', lat: 17.5449069215431, lng: 78.57519539689511, desc: "Mess 2 is across the old hockey ground sits Mess 2. It's quieter, more spacious, and a good place if you want a peaceful meal." },
+  { id: 'lib', name: 'Library', lat: 17.545853792704165, lng: 78.57150321231636, desc: "The campus library is a sanctuary for studying or finding reference books. It's open till late and has AC – major bonus during summers." },
+  { id: 'audi', name: 'Auditorium', lat: 17.545513750761355, lng: 78.57087843149998, desc: "The main auditorium for events, talks, and presentations. A key venue for cultural events and academic seminars." },
+  { id: 'cp', name: 'Connaught Place', lat: 17.54203796959397, lng: 78.57576688860827, desc: "Connaught Place is a central hub area on campus, popular for gatherings and social activities." },
+  { id: 'fountain', name: 'Fountain', lat: 17.54688441980337, lng: 78.57212431161547, desc: "A scenic fountain area that's perfect for evening walks and photo sessions. A peaceful spot on campus." },
+  { id: 'll', name: "Lover's Lane", lat: 17.546845393115422, lng: 78.57298386645695, desc: "A romantic walkway popular among couples and friends for evening strolls and quiet conversations." },
+  { id: 'rnt', name: 'Road Not Taken', lat: 17.54080249370755, lng: 78.57403043467615, desc: "A scenic pathway that's perfect for contemplative walks and enjoying nature on campus. (The real Lover's Lane IYKYK)" },
+  { id: 'swmg', name: 'Swimming Pool', lat: 17.540257034530534, lng: 78.57677623770725, desc: "Campus swimming pool facility for recreation and fitness. A great place to cool off and stay active." },
+  { id: 'rocks', name: 'Rock Garden', lat: 17.5445544074219, lng: 78.5730200932779, desc: "A beautifully landscaped rock garden area, perfect for relaxation and enjoying the natural beauty of campus." },
+  { id: 'direc', name: "Director's Quarter", lat: 17.542873825568694, lng: 78.57651452810894, desc: "The residential area for the campus director and administrative offices." },
+  { id: 'mc', name: 'Medical Centre', lat: 17.542041484380153, lng: 78.57645388966053, desc: "Campus medical facility providing healthcare services to students and staff. Emergency and routine medical care available." },
+  { id: 'ofg', name: 'Old Football Ground', lat: 17.54359745113174, lng: 78.57499151300111, desc: "Comes alive at night. Great spot for chill, impromptu matches and kicking back with the gang." },
+  { id: 'nfg', name: 'New Football Ground', lat: 17.540979058114377, lng: 78.57617359351049, desc: "The fancier turf where official matches take place during fests. Still open for casual games when it is free; mix of pro vibes and chill scenes." },
+  { id: 'cg', name: 'Cricket Ground', lat: 17.539821974494863, lng: 78.57731941388154, desc: "Classic spot for gully-style cricket or full-blown matches. Always buzzing in the evenings with bat, ball, and banter." },
+  { id: 'vg', name: 'Volleyball Ground', lat: 17.54299589606132, lng: 78.57538012811001, desc: "Classic spot for gully-style cricket or full-blown matches. Always buzzing in the evenings with bat, ball, and banter." },  
+  { id: 'nab', name: 'New Academic Block / Chess Courtyard', lat: 17.545894062510076, lng: 78.5695917200961, desc: "New Academic Block is where a forgotten chess courtyard and a lone eatery quietly coexist." },  
+  { id: 'oab', name: 'Old Academic Block / Library Lawns', lat: 17.545179101144704, lng: 78.57116941506344, desc: "Old Academic Block is where things actually happen louder busier and way more alive than its newer sleepy sibling." },  
+  { id: 'valmiki', name: 'Valmiki Bhavan', lat: 17.545872952669946, lng: 78.57470692913476},  //bhavans start from here
+  { id: 'gautam', name: 'Gautam Bhavan', lat: 17.541604563227047, lng: 78.5751704189681},  
+  { id: 'krishnaram', name: 'Krishna Bhavan / Ram Bhavan', lat: 17.542746061934633, lng: 78.57393606166247},  
+  { id: 'gandhibudh', name: 'Gandhi Bhavan / Budh Bhavan', lat: 17.542578448925582, lng: 78.57427698469752},  
+  { id: 'vk', name: 'Vishwakarma Bhavan', lat: 17.54497398734834, lng: 78.57644535482906},  
+  { id: 'shankar', name: 'Shankar Bhavan', lat: 17.544722406131818, lng: 78.57494826204248},  
+  { id: 'vyas', name: 'Vyas Bhavan', lat: 17.54450090499368, lng: 78.57535551716839},  
+  { id: 'malviya', name: 'Malviya Bhavan', lat: 17.540998514798122, lng: 78.57482350258248},  
+  { id: 'meera', name: 'Meera Bhavan', lat: 17.54163340476832, lng: 78.57402955343612},  
+  { id: 'ganga', name: 'Ganga Bhavan', lat: 17.541954864432526, lng: 78.57339341827591},  
+];
+
+  // { id: 'gautam', name: 'Gautam Bhawan', lat: 17.54169138102485, lng: 78.574734610412, desc: "One of the student residential halls on campus, providing accommodation and community living space." },
+  // { id: 'valmiki', name: 'Valmiki Bhawan', lat: 17.545810785048296, lng: 78.57451717435221, desc: "Student residential hall offering accommodation and hostel facilities for campus residents." },
+  // { id: 'malaviya', name: 'Malaviya Bhawan', lat: 17.54109670881316, lng: 78.57469265171456, desc: "Another student residential facility providing hostel accommodation and community spaces." }
+
+  const [selectedLocation, setSelectedLocation] = useState(locations[0]);
+
+  // 🔧 FIX: Leaflet icon configuration moved to useEffect with CDN URLs
+  useEffect(() => {
+    // Fix default marker icon issue in Leaflet
+    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    });
+  }, []);
 
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle('dark');
@@ -440,28 +498,118 @@ const App: React.FC = () => {
             </table>
           </div>
         );
+
       case 'map':
         return (
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-              <Map size={24} className="mr-3 text-blue-600" />
-              Campus Map
+              <MapPin size={24} className="mr-3 text-blue-600" />
+              Campus Navigation
             </h2>
-            <p className="mb-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">
-              Here's an embedded Google Map view of BITS Hyderabad.
+            <p className="mb-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
+              Explore BITS Hyderabad campus locations with interactive map and quick directions.
             </p>
-            <div className="rounded-xl overflow-hidden border dark:border-gray-700">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30469.05008797916!2d78.56234073499547!3d17.544873223369834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9333031aa9e7%3A0x93de88c95ea93376!2sBirla%20Institute%20of%20Technology%20and%20Science%2C%20Pilani%20-%20Hyderabad%20Campus!5e0!3m2!1sen!2sin!4v1718180900000!5m2!1sen!2sin"
-                width="100%"
-                height="400"
-                loading="lazy"
-                allowFullScreen
-                className="w-full"
-              ></iframe>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Left side - Location buttons and info */}
+              <div className="space-y-4">
+                {/* Location Selection Buttons */}
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {locations.map((location, index) => (
+                    <button
+                      key={location.id}
+                      onClick={() => setSelectedLocation(location)}
+                      className={`p-3 rounded-lg text-left transition-all duration-300 transform hover:scale-105 ${
+                        selectedLocation.id === location.id
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                      style={{ animationDelay: `${index * 0.05}s` }}
+                    >
+                      <div className="font-medium text-sm">{location.name}</div>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Selected Location Info */}
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border dark:border-gray-700 transition-all duration-500">
+                  <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white flex items-center">
+                    <MapPin size={18} className="mr-2 text-blue-600" />
+                    {selectedLocation.name}
+                  </h3>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                    {selectedLocation.desc}
+                  </p>
+                  
+                  {/* Go to Location Button */}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${selectedLocation.lat},${selectedLocation.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm font-medium transform hover:scale-105 active:scale-95"
+                  >
+                    <MapPin size={16} />
+                    <span>Open in Google Maps</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right side - Map Preview */}
+              <div className="h-96 lg:h-full min-h-[400px]">
+                <div className="w-full h-full rounded-lg overflow-hidden border dark:border-gray-700 shadow-lg">
+                  <MapContainer
+                    center={[selectedLocation.lat, selectedLocation.lng]}
+                    zoom={18}
+                    scrollWheelZoom={true}
+                    className="w-full h-full z-0"
+                    key={selectedLocation.id} // Force re-render when location changes
+                  >
+                    <ChangeView center={[selectedLocation.lat, selectedLocation.lng]} />
+                    <TileLayer
+                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
+                      <Popup>
+                        <div className="text-center">
+                          <strong className="text-lg">{selectedLocation.name}</strong>
+                          <br />
+                          <span className="text-sm text-gray-600">{selectedLocation.desc}</span>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
+                </div>
+              </div>
+            </div>
+
+            {/* Alternative: Quick Access Cards (below the main content) */}
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Quick Access</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {locations.map((location, index) => (
+                  <a
+                    key={location.id}
+                    href={`https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 p-3 rounded-lg text-center hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-800 dark:hover:to-blue-700 transition-all duration-300 border border-blue-200 dark:border-blue-700 transform hover:scale-105"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <div className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {location.name}
+                    </div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                      <MapPin size={12} className="mr-1" />
+                      View
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         );
+
       case 'about':
         return (
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
@@ -514,7 +662,7 @@ const App: React.FC = () => {
               This website was built with love and dedication to simplify campus life for students.
             </p>
             <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Creators</h3>
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Developers</h3>
               <ul className="list-disc list-inside text-gray-700 dark:text-gray-300">
                 <li>Shriniketh Deevanapalli</li>
                 <li>Kushagra Singh</li>
