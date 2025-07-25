@@ -201,7 +201,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void; activeSection: s
           </button>
           
           <div className="text-white">
-            <h2 className="text-xl font-bold mb-1">Campus Essentials</h2>
+            <h2 className="text-xl font-bold mb-1">Campus101</h2>
             <p className="text-blue-100 dark:text-orange-100 text-sm">BITS Pilani, Hyderabad Campus</p>
           </div>
         </div>
@@ -615,7 +615,7 @@ const locations = [
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
               <Info size={24} className="mr-3 text-blue-600" />
-              About Campus Essentials
+              About Campus101
             </h2>
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
               <p>
@@ -714,7 +714,7 @@ const locations = [
             </button>
             <div className="transform transition-all duration-500 hover:scale-105">
               <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-                Campus Essentials
+                Campus101
               </h1>
               <p className="text-blue-100 dark:text-orange-100 text-sm md:text-base transition-colors duration-300">
                 BITS Pilani, Hyderabad Campus
