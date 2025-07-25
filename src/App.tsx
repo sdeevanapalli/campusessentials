@@ -670,13 +670,12 @@ const locations = [
             </div>
             <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl mb-6">
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Contributors</h3>
-<p className="mb-2 text-gray-700 dark:text-gray-300">
-  Special thanks to <strong>Nikhilesh Yallanki</strong> for providing the TSRTC bus numbers.
-</p>
-<p className="mb-2 text-gray-700 dark:text-gray-300">
-  Thanks also to Viswanath Reddy, Shreyas Reddy, Mohammed Abdul Rahman Khan, Harsha Sista, Rohit Dwivedula, and Rushabh Musthyala for sharing the auto numbers operating at the Main Gate.
-</p>
-
+            <p className="mb-2 text-gray-700 dark:text-gray-300">
+              Special thanks to <strong>Nikhilesh Yallanki</strong> for providing the TSRTC bus numbers.
+            </p>
+            <p className="mb-2 text-gray-700 dark:text-gray-300">
+              Thanks also to Viswanath Reddy, Shreyas Reddy, Mohammed Abdul Rahman Khan, Harsha Sista, Rohit Dwivedula, and Rushabh Musthyala for sharing the auto numbers operating at the Main Gate.
+            </p>
             </div>
             <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-10">
               We sincerely thank everyone who supported us in making this project a reality.
