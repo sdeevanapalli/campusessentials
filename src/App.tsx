@@ -302,7 +302,7 @@ const locations = [
       case 'home':
         return (
           <>
-            <CollapsibleSection title="Mess Timings" icon={<Utensils size={24} />} defaultOpen>
+            <CollapsibleSection title="Mess Timings" icon={<Utensils size={24} />}>
               <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700 transition-all duration-300 hover:shadow-md">
                 <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3 flex items-center">
                   <Clock size={16} className="mr-2 transition-transform duration-300 hover:rotate-180" />
@@ -651,7 +651,7 @@ const locations = [
                 Feel free to reach out for suggestions or contributions!
               </p>
               <p>
-                This website contains relevant information for the Summer Term 2024-25. Data may not be accurate. In case of any discrepancies, please email at <a href="mailto:f20230414@hyderabad.bits-pilani.ac.in">f20230414@hyderabad.bits-pilani.ac.in</a>.
+                This website contains relevant information for the Summer Term 2024-25. Data may not be accurate. In case of any discrepancies, please email at <strong><a href="mailto:f20230414@hyderabad.bits-pilani.ac.in">f20230414@hyderabad.bits-pilani.ac.in</a></strong>.
               </p>
             </div>
           </div>
