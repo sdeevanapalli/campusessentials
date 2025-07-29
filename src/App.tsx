@@ -650,6 +650,9 @@ const locations = [
               <p>
                 Feel free to reach out for suggestions or contributions!
               </p>
+              <p>
+                This website contains relevant information for the Summer Term 2024-25. Data may not be accurate. In case of any discrepancies, please email at <a href="mailto:f20230414@hyderabad.bits-pilani.ac.in">f20230414@hyderabad.bits-pilani.ac.in</a>.
+              </p>
             </div>
           </div>
         );
