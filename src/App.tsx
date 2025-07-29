@@ -310,9 +310,10 @@ const locations = [
                 </h3>
                 <div className="space-y-2 text-sm">
                   {[
-                    ['Breakfast:', '08:00 AM - 9:30 AM'],
+                    ['Breakfast:', '07:30 AM - 9:30 AM'],
                     ['Lunch:', '12:00 PM - 2:00 PM'],
-                    ['Dinner:', '7:30 PM - 09:00 PM']
+                    ['Snacks:', '04:30 PM - 06:00 PM'],
+                    ['Dinner:', '7:30 PM - 09:30 PM']
                   ].map(([meal, time], index) => (
                     <div key={meal} className="flex justify-between transition-all duration-300 hover:bg-green-100 dark:hover:bg-green-800 p-2 rounded" style={{ animationDelay: `${index * 0.1}s` }}>
                       <span className="font-medium">{meal}</span>
