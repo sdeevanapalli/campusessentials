@@ -342,7 +342,7 @@ const locations = [
                   ['Thickshake', '11:00 AM - 9:00 PM'],
                   ['Yummpy\'s', '10:00 AM - 02:00 AM'],
                   ['Hotspot', '10:00 AM - 12:00 AM'],
-                  ['Wich Please and SFC', 'Closed for Summer Term', true],
+                  ['Wich Please', '05:00PM - 02:00AM'],
                   ['Nescafe', 'Closed for Summer Term', true],
                   ['Cafeteria', '8:00 AM - 8:00 PM']
                 ].map(([name, time, closed], index) => (
