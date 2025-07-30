@@ -330,7 +330,7 @@ const locations = [
                   ['Heritage Stationery', '10:00 AM - 7:00 PM (Sunday closed)'],
                   ['Agarwal Supermarket', '9:00 AM - 9:00 PM'],
                   ['Sri Sai Laundry', '9:00 AM - 9:00 PM (Monday closed)'],
-                  ['Pleasant', 'Closed for Summer Term', true],
+                  ['Pleasant', '12:30PM - 3:30PM & 07:00PM - 11:00PM'],
                   ['Protein Isle', '04:00 PM - 10:00 PM'],
                   ['Agra Chat', 'Closed for Summer Term', true],
                   ['Tea Time', '9:00 AM - 9:00 PM (Sunday closed)'],
